@@ -1,0 +1,11 @@
+# Target directory (compiled artifacts)
+target/
+
+# Development files
+metadata.db
+.bin/
+
+# dev files
+.vscode
+
+recipe.json

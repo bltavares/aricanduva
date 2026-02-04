@@ -1,0 +1,50 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT cid, size, content_type, bucket, object_key as key, updated_at FROM metadata WHERE bucket = ? AND object_key = ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "cid",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "size",
+        "ordinal": 1,
+        "type_info": "Integer"
+      },
+      {
+        "name": "content_type",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "bucket",
+        "ordinal": 3,
+        "type_info": "Text"
+      },
+      {
+        "name": "key",
+        "ordinal": 4,
+        "type_info": "Text"
+      },
+      {
+        "name": "updated_at",
+        "ordinal": 5,
+        "type_info": "Datetime"
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "926ead4a9f37b923c2805457f9c01917f371c44d599650f001d404f7e7aa1155"
+}

@@ -1,0 +1,71 @@
+services:
+  aricanduva:
+    build: ../
+    ports:
+      - "3000:3000"
+    environment:
+      RUST_LOG: "debug"
+      AUTH_ACCESS_KEY: banana
+      AUTH_SECRET_KEY: bananabanana
+      MODE: auto
+      RPC_ADDRESS: http://kubo:5001/api/v0 # KUBO container
+    volumes:
+      - aricanduva-data:/app
+    networks:
+      app-network:
+        aliases:
+          - aricanduva.localhost
+    depends_on:
+      - kubo
+
+  kubo:
+    image: ipfs/kubo:latest
+    ports:
+      - "4001:4001"
+      - "4001:4001/udp"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:5001:5001"
+    volumes:
+      - kubo-data:/data/ipfs
+    networks:
+      - app-network
+
+  gotosocial:
+    image: docker.io/superseriousbusiness/gotosocial:latest
+    container_name: gotosocial
+    user: 1000:1000
+    environment:
+      GTS_HOST: gotosocial.localhost
+      GTS_DB_TYPE: sqlite
+      GTS_PROTOCOL: http # for testing
+      GTS_DB_ADDRESS: /gotosocial/storage/sqlite.db
+      GTS_LETSENCRYPT_ENABLED: "false"
+      GTS_WAZERO_COMPILATION_CACHE: /gotosocial/.cache
+      # INTEGRATION
+      GTS_STORAGE_BACKEND: "s3"
+      # Use a public accessible hostname so others can also access the file
+      # For private proxy, set to true
+      GTS_STORAGE_S3_PROXY: "false"
+      GTS_STORAGE_S3_ENDPOINT: "aricanduva.localhost:3000"
+      # GTS_STORAGE_S3_ENDPOINT: "aricanduva.local.gd:3000" # It seems .localhost reserved tld does not resolve in containers
+      GTS_STORAGE_S3_USE_SSL: "false"
+      GTS_STORAGE_S3_ACCESS_KEY: "banana"
+      GTS_STORAGE_S3_SECRET_KEY: "bananabanana"
+      GTS_STORAGE_S3_BUCKET: "gotosocial"
+    volumes:
+      - gotosocial-data:/gotosocial/storage
+    ports:
+      - "80:8080"
+    networks:
+      - app-network
+    depends_on:
+      - aricanduva
+
+volumes:
+  kubo-data:
+  aricanduva-data:
+  gotosocial-data:
+
+
+networks:
+  app-network:

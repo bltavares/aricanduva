@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "\nSELECT count(1) FROM metadata where bucket = ? and object_key LIKE ?;\n        ",
+  "describe": {
+    "columns": [
+      {
+        "name": "count(1)",
+        "ordinal": 0,
+        "type_info": "Integer"
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "6c06f016e315c4e1e39089cae0fc5c00573a0e1a9e7da9803826d2122d70b1b6"
+}

@@ -1,0 +1,8 @@
+target/
+metadata.db
+.bin/
+.vscode/
+.github/
+examples/
+docs/
+Makefile

@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO metadata (cid, bucket, object_key, content_type, size) VALUES ($1, $2, $3, $4, $5)\n            ON CONFLICT DO UPDATE SET cid = excluded.cid, size = excluded.size, content_type = excluded.content_type, updated_at = excluded.updated_at",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "e95ba9f1bc91a41ba6810703e73311ec3ae09d6d8562a0654783b720eed4bc23"
+}

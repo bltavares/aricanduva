@@ -1,5 +1,5 @@
 target/
-metadata.db
+metadata.db*
 .bin/
 .vscode/
 .github/

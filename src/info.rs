@@ -15,10 +15,11 @@ pub struct HealthCheckResponse {
 #[axum::debug_handler]
 pub async fn health_check(
     axum::extract::State(state): axum::extract::State<AppState>,
-) -> Result<Json<HealthCheckResponse>, StatusCode> {
-    let db_status = match state.db.pool.acquire().await {
-        Ok(_) => Some("connected".to_string()),
-        Err(_) => None,
+) -> (StatusCode, Json<HealthCheckResponse>) {
+    let db_status = if state.db.ping().await {
+        Some("connected".to_string())
+    } else {
+        None
     };
     let rpc_status = state.ipfs_client.ping().await.ok();
 
@@ -28,11 +29,14 @@ pub async fn health_check(
         StatusCode::SERVICE_UNAVAILABLE
     };
 
-    Ok(Json(HealthCheckResponse {
-        status: status.to_string(),
-        timestamp: chrono::Utc::now().timestamp(),
-        db_status,
-        rpc_status,
-        mode: state.config.mode.clone(),
-    }))
+    (
+        status,
+        Json(HealthCheckResponse {
+            status: status.to_string(),
+            timestamp: chrono::Utc::now().timestamp(),
+            db_status,
+            rpc_status,
+            mode: state.config.mode.clone(),
+        }),
+    )
 }

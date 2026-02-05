@@ -98,7 +98,7 @@ async fn run(config: RunConfig) {
     }
 
     // Initialize database before starting the server
-    let db = match database::Database::initialize(&config.database_path).await {
+    let db = match database::Database::initialize(&config.database_path, &config.sqlite).await {
         Ok(db) => {
             tracing::info!("Database initialized successfully");
             db

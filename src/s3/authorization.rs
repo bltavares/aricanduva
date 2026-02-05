@@ -22,7 +22,6 @@ use url::Url;
 pub struct AuthConfig {
     #[conf(long, env)]
     access_key: String,
-    // TODO skip on serialize
     #[conf(long, env)]
     secret_key: String,
 }

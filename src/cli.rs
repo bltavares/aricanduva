@@ -7,7 +7,40 @@ use axum::http;
 use conf::{Conf, Subcommands, anstyle::AnsiColor};
 use ipnet::IpNet;
 use listenfd::ListenFd;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
+use serde_with::{DisplayFromStr, serde_as};
+
+#[serde_as]
+#[derive(Debug, Clone, Deserialize, Conf)]
+pub struct SqliteConfig {
+    #[conf(long, env, default_value = "incremental")]
+    #[serde_as(as = "Option<DisplayFromStr>")]
+    /// Options are:
+    /// - none
+    /// - full
+    /// - incremental
+    pub auto_vacuum: Option<sqlx::sqlite::SqliteAutoVacuum>,
+
+    #[conf(long, env, default_value = "wal")]
+    #[serde_as(as = "Option<DisplayFromStr>")]
+    /// Options are:
+    /// - delete
+    /// - truncate
+    /// - persiste
+    /// - memory
+    /// - wall
+    /// - off
+    pub journal_mode: Option<sqlx::sqlite::SqliteJournalMode>,
+
+    #[conf(long, env, default_value = "normal")]
+    #[serde_as(as = "Option<DisplayFromStr>")]
+    /// Options are:
+    /// - off
+    /// - normal
+    /// - full
+    /// - extra
+    pub synchronous: Option<sqlx::sqlite::SqliteSynchronous>,
+}
 
 #[derive(Debug, Clone, Serialize)]
 pub enum OperationMode {
@@ -127,6 +160,10 @@ pub struct RunConfig {
     #[conf(long, env, default(10))]
     /// How many `MultiPart` concurrent upload to hold in memory
     pub concurrent_multipart_upload: usize,
+
+    #[conf(flatten, prefix)]
+    /// Customize `SQlite` database
+    pub sqlite: SqliteConfig,
 }
 
 impl RunConfig {

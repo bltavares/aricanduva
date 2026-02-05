@@ -2,7 +2,7 @@
 target/
 
 # Development files
-metadata.db
+metadata.db*
 .bin/
 
 # dev files

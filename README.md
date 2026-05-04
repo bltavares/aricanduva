@@ -245,7 +245,7 @@ If you expect large files, run with high memory limits, to avoid restarts mid-up
 
 ## Local Development
 
-The project declares integration with [cargo-run-bin](https://crates.io/crates/cargo-run-bin) to help setup environment.
+The project declares integration with [mise](https://mise.en.dev) to help setup environment.
 
 ### Hot-Reloading with systemfd
 

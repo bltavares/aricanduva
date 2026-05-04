@@ -1,0 +1,13 @@
+[tools]
+rust = "latest"
+cargo-binstall = "latest"
+rust-analyzer = "latest"
+tombi = "latest"
+
+"cargo:systemfd" = "latest"
+watchexec = "latest"
+"cargo:bacon" = "latest"
+"cargo:cargo-run-bin" = "latest"
+
+sqlite = "latest"
+"cargo:sqlx-cli" = "latest"

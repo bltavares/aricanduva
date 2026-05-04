@@ -9,7 +9,6 @@ export DATABASE_URL := sqlite:$(DATABASE_PATH)
 
 # development preparations
 prepare:
-	cargo bin --install
 	cargo sqlx database reset -y
 	cargo sqlx prepare
 
@@ -20,7 +19,7 @@ lint: | prepare
 # Run in development with listenfd
 run: export RUST_LOG ?= aricanduva=debug
 run:
-	cargo bin systemfd --no-pid -s http::[::]:3000 -- cargo bin watchexec cargo run
+	cargo systemfd --no-pid -s http::[::]:3000 -- cargo watchexec cargo run
 
 DOCKER_IMAGE := bltavares/aricanduva
 # Build container

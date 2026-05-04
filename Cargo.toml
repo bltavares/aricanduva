@@ -41,10 +41,3 @@ dashmap = "6.1.0"
 itertools = "0.14.0"
 serde_with = "3.16.1"
 quick-xml = { version = "0.39.0", features = ["serialize"] }
-
-# Used with cargo-run-bin
-[package.metadata.bin]
-cargo-binstall = { version = "1.17.4" }
-watchexec-cli = { version = "2.3.3", bins = ["watchexec"] }
-# sqlx-cli = { version = "0.8.6", bins = ["cargo-sqlx"] } # cargo-bininstall --intall-path issue when building from source
-systemfd = { version = "0.4.6" }
